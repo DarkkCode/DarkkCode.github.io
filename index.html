@@ -23,6 +23,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
                     <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
                     <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                 </ul>
@@ -37,11 +38,16 @@
                     <h5 class="text-uppercase welcome-text">Hello, I'm</h5>
                     <h1 class="display-1 fw-bold">Vishesh Madan</h1>
                     <h2 class="h1 mb-4">I am a <span class="gradient-text" id="typewriter"></span><span class="cursor">&nbsp;</span></h2>
-                    <p class="lead text-muted mb-5 description-text">
-                        A driven CS Student and Laravel Developer from Karachi. I build secure, scalable web applications and community platforms.
+                    <p class="lead mb-5" style="max-width: 650px;">
+                        A Computer Science student with 2+ years of programming experience. 
+                        I build secure, scalable web applications and have a strong interest in 
+                        <strong>AI, Cybersecurity, and Data Science</strong>.
                     </p>
-                    <a href="#projects" class="btn btn-glow me-3">View My Work</a>
-                    <a href="https://github.com/DarkkCode" target="_blank" class="btn btn-outline-glow"><i class="fab fa-github"></i> GitHub</a>
+                    <div class="d-flex gap-3">
+                        <a href="#projects" class="btn btn-glow">View Work</a>
+                        <a href="https://github.com/DarkkCode" target="_blank" class="btn btn-outline-glow"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="https://www.linkedin.com/in/vishesh-madan-76b97a289" target="_blank" class="btn btn-outline-glow"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,19 +56,101 @@
     <section id="about" data-aos="fade-up">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8 text-center">
-                    <h2 class="fw-bold mb-4">About Me</h2>
-                    <p class="text-muted fs-5">
-                        Currently studying at <span class="text-white">SZABIST</span>, I specialize in <strong>PHP, Laravel, and MySQL</strong>. 
-                        My journey involves building real-world tools like community forums and management systems. 
-                        I love solving complex backend logic while ensuring the frontend looks clean and modern.
-                    </p>
-                    <div class="mt-4">
-                        <span class="tech-badge">Laravel</span>
-                        <span class="tech-badge">PHP</span>
-                        <span class="tech-badge">MySQL</span>
-                        <span class="tech-badge">Bootstrap</span>
-                        <span class="tech-badge">Git</span>
+                <div class="col-lg-10">
+                    <h2 class="fw-bold mb-4 text-center">About Me</h2>
+                    <div class="project-card">
+                        <p class="fs-5">
+                            I am currently studying at <strong class="text-white">SZABIST</strong>. Beyond just coding, 
+                            I bring a unique perspective to tech—my background as a <strong class="text-white">former debater</strong> 
+                            has sharpened my ability to think figuratively and logically.
+                        </p>
+                        <p>
+                            I specialize in <strong>PHP, Laravel, and MySQL</strong>, but I am also deeply exploring 
+                            Prompt Engineering and AI. I have worked privately with clients to build custom websites, 
+                            enhancing my skills in requirements gathering and delivering real solutions[cite: 24].
+                        </p>
+                        
+                        <div class="mt-4">
+                            <h5 class="gradient-text mb-3">Technical Arsenal</h5>
+                            <span class="tech-badge">Java</span>
+                            <span class="tech-badge">C</span>
+                            <span class="tech-badge">PHP</span>
+                            <span class="tech-badge">Laravel</span>
+                            <span class="tech-badge">MySQL</span>
+                            <span class="tech-badge">HTML/CSS</span>
+                            <span class="tech-badge">Prompt Engineering</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="education">
+        <div class="container">
+            <h2 class="fw-bold mb-5 text-center" data-aos="fade-up">Education Journey</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8" data-aos="fade-up" data-aos-delay="100">
+                    <div class="timeline">
+                        
+                        <div class="timeline-item">
+                            <span class="text-muted small">Sept 2023 - Oct 2027 (Expected)</span>
+                            <h4 class="fw-bold mt-1">SZABIST</h4>
+                            <p class="mb-0">Bachelor of Science in Computer Science (BSCS) [cite: 31]</p>
+                            <p class="text-muted small">Host and Interviewer at SZAB FM Digital [cite: 19]</p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <span class="text-muted small">July 2020 - Aug 2022</span>
+                            <h4 class="fw-bold mt-1">NCR-CET College</h4>
+                            <p class="mb-0">Intermediate / College Education [cite: 33, 34]</p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <span class="text-muted small">Completed May 2020</span>
+                            <h4 class="fw-bold mt-1">St. Paul's High School</h4>
+                            <p class="mb-0">Foundational Schooling [cite: 35]</p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="certs" class="bg-opacity-10" style="background-color: rgba(255,255,255,0.02);">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-6" data-aos="fade-right">
+                    <h3 class="fw-bold mb-4">🏆 Certifications</h3>
+                    <div class="skill-card">
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <strong>Google Prompting Essentials</strong> [cite: 12]
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <strong>Google AI Essentials</strong> [cite: 13]
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-check-circle text-success me-2"></i>
+                                <strong>Fundamentals of Digital Marketing</strong> [cite: 14]
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-6" data-aos="fade-left">
+                    <h3 class="fw-bold mb-4">🗣️ Languages</h3>
+                    <div class="skill-card">
+                        <div class="d-flex flex-wrap gap-2">
+                            <span class="tech-badge">English (Professional)</span>
+                            <span class="tech-badge">Urdu (Native)</span>
+                            <span class="tech-badge">Sindhi (Native)</span>
+                            <span class="tech-badge">Hindi (Professional)</span>
+                            <span class="tech-badge">Spanish (Elementary)</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -75,12 +163,12 @@
             <div class="row g-4">
                 
                 <div class="col-md-6" data-aos="fade-up" data-aos-delay="100">
-                    <div class="project-card p-4">
+                    <div class="project-card">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h3 class="fw-bold m-0">🐝 BitHive</h3>
                             <a href="https://github.com/DarkkCode/BitHive" target="_blank" class="text-white"><i class="fab fa-github fa-lg"></i></a>
                         </div>
-                        <p class="text-muted">
+                        <p>
                             A secure community forum built with Laravel. Features authentication, CRUD posts, Q&A sections, and a dynamic Dark/Light mode toggle.
                         </p>
                         <div class="mt-3">
@@ -92,13 +180,13 @@
                 </div>
 
                 <div class="col-md-6" data-aos="fade-up" data-aos-delay="200">
-                    <div class="project-card p-4">
+                    <div class="project-card">
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <h3 class="fw-bold m-0">🎓 Student Management</h3>
                             <a href="#" class="text-white"><i class="fab fa-github fa-lg"></i></a>
                         </div>
-                        <p class="text-muted">
-                            An administrative dashboard to manage student records, grades, and attendance. Optimized for data integrity and quick retrieval.
+                        <p>
+                            An administrative dashboard to manage student records, grades, and attendance. Optimized for data integrity.
                         </p>
                         <div class="mt-3">
                             <span class="tech-badge">PHP</span>
@@ -115,18 +203,17 @@
     <section id="contact" class="text-center" data-aos="zoom-in">
         <div class="container">
             <h2 class="fw-bold mb-4">Let's Connect</h2>
-            <p class="text-muted mb-4">Always open to discussing new projects, creative ideas, or opportunities to be part of your visions.</p>
-            <a href="mailto:your-email@example.com" class="btn btn-glow">Say Hello 👋</a>
+            <p class="mb-4">Always open to discussing new projects, creative ideas, or opportunities.</p>
+            <a href="mailto:visheshmadan10@gmail.com" class="btn btn-glow">Email Me 👋</a>
             
             <div class="mt-5">
-                <p class="small text-muted">&copy; 2026 Vishesh Madan. Built with Bootstrap & Laravel Passion.</p>
+                <p class="small text-muted">&copy; 2026 Vishesh Madan. Built with Code.</p>
             </div>
         </div>
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
     <script src="script.js"></script>
 </body>
 </html>

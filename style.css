@@ -2,10 +2,10 @@
 :root {
     --bg-dark: #0f0f0f;
     --bg-card: #1a1a1a;
-    --primary: #ff512f;  /* Orange-Red Gradient Start */
-    --secondary: #dd2476; /* Orange-Red Gradient End */
+    --primary: #ff512f;
+    --secondary: #dd2476;
     --text-main: #ffffff;
-    --text-muted: #a0a0a0;
+    --text-sub: #e0e0e0; /* Brighter than "muted" for better visibility */
 }
 
 body {
@@ -15,7 +15,17 @@ body {
     overflow-x: hidden;
 }
 
-/* --- GRADIENT TEXT & BUTTONS --- */
+/* --- TEXT VISIBILITY FIXES --- */
+p, .lead {
+    color: var(--text-sub) !important; /* Forces all paragraphs to be readable */
+    line-height: 1.7;
+}
+
+.text-muted {
+    color: #b0b0b0 !important; /* Overrides Bootstrap's dark grey */
+}
+
+/* --- GRADIENTS --- */
 .gradient-text {
     background: linear-gradient(to right, var(--primary), var(--secondary));
     -webkit-background-clip: text;
@@ -24,23 +34,14 @@ body {
     font-weight: bold;
 }
 
-.brand-dot {
-    color: var(--primary);
-}
+.brand-dot { color: var(--primary); }
+.welcome-text { color: var(--primary); letter-spacing: 2px; }
 
-.welcome-text {
-    color: var(--primary);
-    letter-spacing: 2px;
-}
-
-.description-text {
-    max-width: 600px;
-}
-
+/* --- BUTTONS --- */
 .btn-glow {
     background: linear-gradient(45deg, var(--primary), var(--secondary));
     border: none;
-    color: white;
+    color: white !important;
     padding: 12px 30px;
     border-radius: 50px;
     font-weight: 600;
@@ -50,7 +51,6 @@ body {
 .btn-glow:hover {
     transform: translateY(-3px);
     box-shadow: 0 10px 20px rgba(221, 36, 118, 0.4);
-    color: white;
 }
 
 .btn-outline-glow {
@@ -67,26 +67,49 @@ body {
     color: white;
 }
 
-/* --- NAVBAR (GLASSMORPHISM) --- */
+/* --- NAVBAR --- */
 .navbar {
     background: rgba(15, 15, 15, 0.85);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-/* --- PROJECT CARDS --- */
-.project-card {
+/* --- TIMELINE (EDUCATION) --- */
+.timeline {
+    border-left: 3px solid var(--primary);
+    padding-left: 30px;
+    position: relative;
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 40px;
+}
+
+.timeline-item::before {
+    content: '';
+    width: 15px;
+    height: 15px;
+    background: var(--primary);
+    border-radius: 50%;
+    position: absolute;
+    left: -39px;
+    top: 5px;
+    box-shadow: 0 0 10px var(--primary);
+}
+
+/* --- CARDS & BADGES --- */
+.project-card, .skill-card {
     background-color: var(--bg-card);
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 15px;
-    overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    padding: 25px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
     height: 100%;
 }
 
-.project-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+.project-card:hover, .skill-card:hover {
+    transform: translateY(-5px);
     border-color: var(--primary);
 }
 
@@ -95,31 +118,17 @@ body {
     color: var(--primary);
     padding: 5px 12px;
     border-radius: 20px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     margin-right: 5px;
-}
-
-/* --- TYPEWRITER CURSOR --- */
-.cursor {
+    margin-bottom: 5px;
     display: inline-block;
-    width: 3px;
-    background-color: var(--primary);
-    animation: blink 1s infinite;
 }
 
-@keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0; }
-}
-
-/* --- SECTIONS --- */
-section {
-    padding: 80px 0;
-}
-
+/* --- LAYOUT --- */
+section { padding: 80px 0; }
 .hero-section {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
-    background: radial-gradient(circle at top right, rgba(255, 81, 47, 0.1), transparent 40%);
+    background: radial-gradient(circle at top right, rgba(255, 81, 47, 0.08), transparent 40%);
 }
