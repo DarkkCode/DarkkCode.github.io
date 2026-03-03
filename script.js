@@ -36,5 +36,28 @@ function type() {
     setTimeout(type, typeSpeed);
 }
 
+// 3. UNIVERSAL PORTFOLIO LIGHTBOX (Zoom) FUNCTIONS
+// Opens the full-screen lightbox and sets the image source
+function openPortfolioLightbox(imageSrc) {
+    const overlay = document.getElementById('portfolioLightboxOverlay');
+    const lightboxImage = document.getElementById('portfolioLightboxImage');
+    
+    lightboxImage.src = imageSrc;
+    overlay.style.display = 'flex'; // Uses flex for centering
+    
+    // Prevent scrolling behind the overlay
+    document.body.style.overflow = 'hidden';
+}
+
+// Closes the full-screen lightbox
+function closePortfolioLightbox() {
+    const overlay = document.getElementById('portfolioLightboxOverlay');
+    
+    overlay.style.display = 'none';
+    
+    // Restore scrolling
+    document.body.style.overflow = '';
+}
+
 // Start typing on load
 document.addEventListener('DOMContentLoaded', type);
