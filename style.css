@@ -1,36 +1,52 @@
 :root {
-    --bg-dark: #070709; 
-    --bg-card: rgba(15, 15, 20, 0.45); /* More transparent for 3D visibility */
+    --bg-dark: #050505; 
     --primary: #ff512f;
     --secondary: #dd2476;
     --text-main: #ffffff;
-    --text-sub: #e0e0e0;
+    --text-sub: #b0b0b0;
 }
 
 body {
     background-color: var(--bg-dark);
     color: var(--text-main);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
     overflow-x: hidden;
 }
 
-/* --- THE 3D BACKGROUND CANVAS --- */
-#vanta-bg {
+/* --- THE 3D CANVAS STAGE --- */
+#canvas-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 0;
-    pointer-events: auto; /* Allows mouse interaction */
+    z-index: 0; /* Stays behind everything */
+    pointer-events: none; /* Lets you click buttons over it */
 }
 
-.z-index-1 { position: relative; z-index: 1; }
+/* --- THE SCROLL STORY SECTIONS --- */
+.story-container {
+    position: relative;
+    z-index: 1; /* Sits on top of the 3D canvas */
+}
 
-p, .lead { color: var(--text-sub) !important; line-height: 1.7; }
-.text-muted { color: #a0a0a0 !important; }
+.step-section {
+    min-height: 100vh; /* Each section takes exactly one full screen */
+    padding: 100px 0;
+    position: relative;
+}
 
-/* --- TEXT & GRADIENTS --- */
+/* We hide the text initially so GSAP can fade it in on scroll */
+.text-content {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* --- TYPOGRAPHY & GRADIENTS --- */
+p, .lead { color: var(--text-sub) !important; line-height: 1.8; }
+
 .gradient-text {
     background: linear-gradient(to right, var(--primary), var(--secondary));
     -webkit-background-clip: text;
@@ -38,42 +54,13 @@ p, .lead { color: var(--text-sub) !important; line-height: 1.7; }
     -webkit-text-fill-color: transparent;
     font-weight: bold;
 }
-.text-glow { text-shadow: 0 0 20px rgba(255, 81, 47, 0.5); }
-.brand-dot { color: var(--primary); }
-.welcome-text { color: var(--primary); letter-spacing: 2px; }
+.text-glow { text-shadow: 0 0 30px rgba(255, 81, 47, 0.4); }
 
-/* --- BUTTONS --- */
-.btn-glow {
-    background: linear-gradient(45deg, var(--primary), var(--secondary));
-    border: none;
-    color: white !important;
-    padding: 12px 30px;
-    border-radius: 50px;
-    font-weight: 600;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 15px rgba(221, 36, 118, 0.3);
-}
-.btn-glow:hover {
-    transform: translateY(-3px) scale(1.05);
-    box-shadow: 0 10px 25px rgba(221, 36, 118, 0.7);
-}
-
-.btn-outline-glow {
-    border: 2px solid var(--primary);
-    color: white;
-    padding: 10px 28px;
-    border-radius: 50px;
-    background: rgba(0,0,0,0.4);
-    backdrop-filter: blur(5px);
-    transition: 0.3s;
-}
-.btn-outline-glow:hover { background: var(--primary); color: white; box-shadow: 0 0 15px var(--primary); }
-
-/* --- HIGH-END GLASSMORPHISM --- */
+/* --- GLASSMORPHISM --- */
 .glass-nav {
-    background: rgba(7, 7, 9, 0.5);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
+    background: rgba(5, 5, 5, 0.5);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -81,30 +68,15 @@ p, .lead { color: var(--text-sub) !important; line-height: 1.7; }
     object-fit: cover;
     object-position: top center;
     border: 2px solid var(--primary);
-    cursor: pointer;
-    box-shadow: 0 0 10px var(--primary);
 }
 
 .glass-panel {
-    background: var(--bg-card);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(15, 15, 20, 0.4);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
     border-radius: 20px;
-    border-top: 1px solid rgba(255,255,255,0.15);
-    border-left: 1px solid rgba(255,255,255,0.15);
-}
-
-.project-card, .skill-card {
-    padding: 30px;
-    height: 100%;
-    transform-style: preserve-3d;
-}
-
-/* The 3D pop-out effect on hover */
-.project-card h3, .project-card p, .skill-card h5, .tech-badge {
-    transform: translateZ(40px); 
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
 }
 
 .tech-badge {
@@ -117,26 +89,22 @@ p, .lead { color: var(--text-sub) !important; line-height: 1.7; }
     margin-right: 6px;
     margin-bottom: 8px;
     display: inline-block;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
 }
 
-/* --- LIGHTBOX --- */
-.portfolio-lightbox-overlay {
-    display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.95); z-index: 1060; justify-content: center; align-items: center; cursor: zoom-out;
+/* --- BUTTONS --- */
+.btn-glow {
+    background: linear-gradient(45deg, var(--primary), var(--secondary));
+    border: none;
+    color: white !important;
+    padding: 12px 30px;
+    border-radius: 50px;
+    font-weight: 600;
 }
-.portfolio-lightbox-overlay img { max-width: 90%; max-height: 90%; border-radius: 10px; box-shadow: 0 0 40px rgba(255, 81, 47, 0.2); }
-.portfolio-lightbox-overlay .close-btn { position: absolute; top: 30px; right: 40px; color: white; font-size: 40px; cursor: pointer; }
-
-@media (max-width: 767.98px) {
-    .mobile-spacer-force-mb { margin-bottom: 5rem !important; padding-bottom: 2rem !important; }
+.btn-outline-glow {
+    border: 2px solid var(--primary);
+    color: white;
+    padding: 10px 28px;
+    border-radius: 50px;
+    background: transparent;
 }
-
-section { padding: 80px 0; }
-.hero-section { min-height: 100vh; display: flex; align-items: center; }
-
-/* Hide elements initially so GSAP can animate them in */
-.gsap-card, .section-title {
-    opacity: 0;
-    visibility: hidden;
-}
+.btn-outline-glow:hover { background: var(--primary); color: white; }

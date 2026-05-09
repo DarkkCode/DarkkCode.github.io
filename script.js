@@ -1,84 +1,162 @@
-// 1. Initialize 3D Cyber Network Background (Vanta/Three.js)
-VANTA.NET({
-  el: "#vanta-bg",
-  mouseControls: true,
-  touchControls: true,
-  gyroControls: false,
-  minHeight: 200.00,
-  minWidth: 200.00,
-  scale: 1.00,
-  scaleMobile: 1.00,
-  color: 0xff512f,      // Matches your primary red/orange
-  backgroundColor: 0x070709, // Matches your dark bg
-  points: 12.00,        // Density of the network
-  maxDistance: 22.00,   // Line connection distance
-  spacing: 18.00        // Space between nodes
-});
-
-// 2. Initialize GSAP Scroll Animations
+// Register GSAP ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
-// Hero Section Entrance Animation
-gsap.from(".hero-content > *", {
-    y: 50,
-    opacity: 0,
-    duration: 1,
-    stagger: 0.2,
-    ease: "power3.out",
-    delay: 0.2
+/* ==========================================
+   PART 1: THREE.JS 3D SCENE SETUP
+   ========================================== */
+const canvasContainer = document.getElementById('canvas-container');
+
+// Scene, Camera, Renderer
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true }); // alpha: true makes bg transparent
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
+canvasContainer.appendChild(renderer.domElement);
+
+// Create the "Digital Core" (A central gem with an outer ring)
+const coreGroup = new THREE.Group();
+scene.add(coreGroup);
+
+// The Inner Core (Icosahedron)
+const innerGeometry = new THREE.IcosahedronGeometry(1.5, 0);
+const innerMaterial = new THREE.MeshBasicMaterial({ 
+    color: 0xff512f, 
+    wireframe: true,
+    transparent: true,
+    opacity: 0.8
+});
+const innerCore = new THREE.Mesh(innerGeometry, innerMaterial);
+coreGroup.add(innerCore);
+
+// The Outer Data Ring (Torus)
+const ringGeometry = new THREE.TorusGeometry(2.5, 0.05, 16, 100);
+const ringMaterial = new THREE.MeshBasicMaterial({ 
+    color: 0xdd2476,
+    transparent: true,
+    opacity: 0.5
+});
+const dataRing = new THREE.Mesh(ringGeometry, ringMaterial);
+dataRing.rotation.x = Math.PI / 2;
+coreGroup.add(dataRing);
+
+// Positioning Camera
+camera.position.z = 6;
+
+// Constant ambient rotation (happens even when not scrolling)
+function animate() {
+    requestAnimationFrame(animate);
+    innerCore.rotation.y += 0.005;
+    innerCore.rotation.x += 0.002;
+    dataRing.rotation.z -= 0.003;
+    renderer.render(scene, camera);
+}
+animate();
+
+// Handle Window Resize
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
 });
 
-// Scroll Reveal for all Glass Cards
-const gsapCards = gsap.utils.toArray('.gsap-card');
-gsapCards.forEach(card => {
-    gsap.fromTo(card, 
+
+/* ==========================================
+   PART 2: GSAP SCROLL-SCRUBBING ANIMATION
+   ========================================== */
+
+// Make the HTML text sections fade in as you scroll to them
+const textSections = gsap.utils.toArray('.text-content');
+textSections.forEach(section => {
+    gsap.fromTo(section, 
+        { autoAlpha: 0, y: 50 }, 
         { 
-            y: 100, 
-            opacity: 0, 
-            rotationX: -10, // Slight 3D rotation on entrance
-            autoAlpha: 0 
-        },
-        {
-            y: 0,
-            opacity: 1,
-            rotationX: 0,
-            autoAlpha: 1,
-            duration: 1.2,
-            ease: "power4.out",
+            autoAlpha: 1, 
+            y: 0, 
+            duration: 1, 
             scrollTrigger: {
-                trigger: card,
-                start: "top 85%", // Triggers when the top of the card hits 85% down the screen
-                toggleActions: "play none none reverse" // Plays on scroll down, reverses on scroll up
+                trigger: section,
+                start: "top 60%", // Triggers when section is 60% down the screen
+                end: "bottom 20%",
+                toggleActions: "play reverse play reverse" // Fades out if you scroll past it
             }
         }
     );
 });
 
-// Scroll Reveal for Titles
-const sectionTitles = gsap.utils.toArray('.section-title');
-sectionTitles.forEach(title => {
-    gsap.fromTo(title,
-        { x: -50, opacity: 0, autoAlpha: 0 },
-        {
-            x: 0, opacity: 1, autoAlpha: 1, duration: 1, ease: "power3.out",
-            scrollTrigger: {
-                trigger: title,
-                start: "top 90%"
-            }
-        }
-    );
+// THE MAGIC: Tie the 3D Core to the Scroll Wheel!
+
+// 1. Home to About: Move Core to the Right
+gsap.to(coreGroup.position, {
+    x: 3, // Move 3 units right
+    y: 0,
+    z: -1, // Push back slightly
+    ease: "none",
+    scrollTrigger: {
+        trigger: "#about",
+        start: "top bottom",
+        end: "top center",
+        scrub: true // THIS connects it strictly to the scroll wheel
+    }
+});
+// Also rotate the ring wildly
+gsap.to(dataRing.rotation, {
+    x: Math.PI,
+    ease: "none",
+    scrollTrigger: {
+        trigger: "#about",
+        start: "top bottom",
+        end: "top center",
+        scrub: true
+    }
 });
 
-// 3. Typewriter Effect Logic
+// 2. About to Certs: Move Core to the Left
+gsap.to(coreGroup.position, {
+    x: -3, // Move 3 units left
+    ease: "none",
+    scrollTrigger: {
+        trigger: "#certs",
+        start: "top bottom",
+        end: "top center",
+        scrub: true
+    }
+});
+
+// 3. Certs to Projects: Move Core to Center and Scale Up MASSIVELY
+gsap.to(coreGroup.position, {
+    x: 0,
+    z: 2, // Pull it closer to the camera
+    ease: "none",
+    scrollTrigger: {
+        trigger: "#projects",
+        start: "top bottom",
+        end: "center center",
+        scrub: true
+    }
+});
+gsap.to(coreGroup.scale, {
+    x: 3,
+    y: 3,
+    z: 3,
+    ease: "none",
+    scrollTrigger: {
+        trigger: "#projects",
+        start: "top bottom",
+        end: "center center",
+        scrub: true
+    }
+});
+
+/* ==========================================
+   PART 3: TYPEWRITER EFFECT
+   ========================================== */
 const textElement = document.getElementById('typewriter');
-const phrases = ["Laravel Developer", "CS Student", "Backend Engineer", "Tech Enthusiast"];
-let phraseIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
+const phrases = ["Laravel Developer.", "CS Student.", "Logic Builder."];
+let phraseIndex = 0; let charIndex = 0; let isDeleting = false;
 
 function type() {
     const currentPhrase = phrases[phraseIndex];
-    
     if (isDeleting) {
         textElement.textContent = currentPhrase.substring(0, charIndex - 1);
         charIndex--;
@@ -86,35 +164,12 @@ function type() {
         textElement.textContent = currentPhrase.substring(0, charIndex + 1);
         charIndex++;
     }
-
     let typeSpeed = isDeleting ? 50 : 100;
-
     if (!isDeleting && charIndex === currentPhrase.length) {
-        typeSpeed = 2000;
-        isDeleting = true;
+        typeSpeed = 2000; isDeleting = true;
     } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        phraseIndex = (phraseIndex + 1) % phrases.length;
-        typeSpeed = 500;
+        isDeleting = false; phraseIndex = (phraseIndex + 1) % phrases.length; typeSpeed = 500;
     }
-
     setTimeout(type, typeSpeed);
 }
-
-// 4. UNIVERSAL PORTFOLIO LIGHTBOX (Zoom)
-function openPortfolioLightbox(imageSrc) {
-    const overlay = document.getElementById('portfolioLightboxOverlay');
-    const lightboxImage = document.getElementById('portfolioLightboxImage');
-    
-    lightboxImage.src = imageSrc;
-    overlay.style.display = 'flex'; 
-    document.body.style.overflow = 'hidden';
-}
-
-function closePortfolioLightbox() {
-    const overlay = document.getElementById('portfolioLightboxOverlay');
-    overlay.style.display = 'none';
-    document.body.style.overflow = '';
-}
-
 document.addEventListener('DOMContentLoaded', type);
