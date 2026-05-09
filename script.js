@@ -6,34 +6,38 @@ gsap.registerPlugin(ScrollTrigger);
 const canvasContainer = document.getElementById('canvas-container');
 
 const scene = new THREE.Scene();
-// Deep fog fades out the distant stars
 scene.fog = new THREE.FogExp2(0x050505, 0.12);
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.z = 6;
 
-// High-performance WebGL renderer
 const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Stops lag on high-res monitors
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 canvasContainer.appendChild(renderer.domElement);
 
-const masterGroup = new THREE.Group();
-scene.add(masterGroup);
+// We create TWO groups. 
+// parallaxGroup listens ONLY to the mouse.
+// masterGroup listens ONLY to the scroll wheel. (This prevents them from fighting!)
+const parallaxGroup = new THREE.Group();
+scene.add(parallaxGroup);
 
-// --- 1. The Holographic Core (Made of 12,000 glowing dots!) ---
+const masterGroup = new THREE.Group();
+parallaxGroup.add(masterGroup);
+
+// --- 1. The Holographic Core ---
 const coreGeometry = new THREE.TorusKnotGeometry(1.2, 0.4, 300, 40);
 const coreMaterial = new THREE.PointsMaterial({ 
     size: 0.025, 
     color: 0xff512f, 
     transparent: true,
     opacity: 0.8,
-    blending: THREE.AdditiveBlending // Makes the dots glow intensely when they overlap
+    blending: THREE.AdditiveBlending 
 });
 const coreMesh = new THREE.Points(coreGeometry, coreMaterial);
 masterGroup.add(coreMesh);
 
-// --- 2. The Outer Data Ring (Also glowing dots) ---
+// --- 2. The Outer Data Ring ---
 const ringGeom = new THREE.TorusGeometry(3, 0.1, 30, 200);
 const ringMat = new THREE.PointsMaterial({ 
     size: 0.02, 
@@ -62,11 +66,11 @@ const particlesMat = new THREE.PointsMaterial({
     blending: THREE.AdditiveBlending
 });
 const particlesMesh = new THREE.Points(particlesGeom, particlesMat);
-scene.add(particlesMesh); // Added to scene so it surrounds the camera
+parallaxGroup.add(particlesMesh); 
 
 
 /* ==========================================
-   PART 2: BUTTERY-SMOOTH MOUSE ENGINE
+   PART 2: HIGH-RESPONSIVE MOUSE PARALLAX
    ========================================== */
 let mouseX = 0;
 let mouseY = 0;
@@ -91,12 +95,13 @@ function animate() {
     ringMesh.rotation.z -= 0.002;
     particlesMesh.rotation.y = elapsedTime * 0.015; 
 
-    // Smooth Camera Glide (Interpolation)
-    targetX = mouseX * 0.0015;
-    targetY = mouseY * 0.0015;
-    camera.position.x += (targetX - camera.position.x) * 0.05;
-    camera.position.y += (-targetY - camera.position.y) * 0.05;
-    camera.lookAt(scene.position);
+    // Flawless Mouse Tracking: We physically tilt the entire scene
+    targetX = mouseX * 0.001;
+    targetY = mouseY * 0.001;
+    
+    // Lerp makes it buttery smooth
+    parallaxGroup.rotation.y += (targetX - parallaxGroup.rotation.y) * 0.05;
+    parallaxGroup.rotation.x += (targetY - parallaxGroup.rotation.x) * 0.05;
 
     renderer.render(scene, camera);
 }
@@ -110,10 +115,10 @@ window.addEventListener('resize', () => {
 
 
 /* ==========================================
-   PART 3: FLAWLESS SCROLL SCRUBBING
+   PART 3: THE MASTER SCROLL TIMELINE (Zero Snap)
    ========================================== */
 
-// 1. Smooth Text Fade-ins (Fixed trigger points so it doesn't snap)
+// 1. Text Fade-ins (Kept separate so they trigger as you reach them)
 const textSections = gsap.utils.toArray('.text-content');
 textSections.forEach(section => {
     gsap.fromTo(section, 
@@ -125,7 +130,7 @@ textSections.forEach(section => {
             ease: "power2.out",
             scrollTrigger: {
                 trigger: section,
-                start: "top 75%", // Triggers nicely as it enters the bottom of the screen
+                start: "top 75%", 
                 end: "bottom 25%",
                 toggleActions: "play reverse play reverse"
             }
@@ -133,55 +138,31 @@ textSections.forEach(section => {
     );
 });
 
-// 2. The 3D Object Timeline
-const scrubSpeed = 2.5; // High scrub value = heavy, cinematic, lag-free momentum
-
-// Home to About
-gsap.to(masterGroup.position, {
-    x: 2.8,
-    z: -1.5,
-    ease: "sine.inOut",
-    scrollTrigger: { trigger: "#about", start: "top bottom", end: "center center", scrub: scrubSpeed }
-});
-gsap.to(coreMesh.rotation, {
-    z: Math.PI,
-    ease: "sine.inOut",
-    scrollTrigger: { trigger: "#about", start: "top bottom", end: "center center", scrub: scrubSpeed }
+// 2. The 1:1 Scroll Master Timeline (This completely fixes the snapping)
+const masterTl = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".story-container",
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 2 // Heavy, lag-free momentum
+    }
 });
 
-// About to Certs
-gsap.to(masterGroup.position, {
-    x: -2.8,
-    ease: "sine.inOut",
-    scrollTrigger: { trigger: "#certs", start: "top bottom", end: "center center", scrub: scrubSpeed }
-});
-// Smooth color transition to deep purple
-gsap.to(coreMaterial.color, {
-    r: 0.6, g: 0.1, b: 0.9,
-    scrollTrigger: { trigger: "#certs", start: "top bottom", end: "center center", scrub: scrubSpeed }
-});
+// Sequence 1: Home to About
+masterTl.to(masterGroup.position, { x: 2.8, z: -1.5, ease: "power1.inOut" }, 0)
+        .to(coreMesh.rotation, { z: Math.PI, ease: "power1.inOut" }, 0);
 
-// Certs to Projects (THE BREATHTAKING ZOOM)
-// It moves to the center, flips 90 degrees like a portal, and pushes RIGHT into the camera
-gsap.to(masterGroup.position, {
-    x: 0,
-    z: 4.8, // Pushes it extremely close to the camera lens
-    ease: "power2.inOut",
-    scrollTrigger: { trigger: "#projects", start: "top bottom", end: "center center", scrub: scrubSpeed }
-});
-gsap.to(masterGroup.rotation, {
-    x: Math.PI / 2, // Flips it flat
-    ease: "power2.inOut",
-    scrollTrigger: { trigger: "#projects", start: "top bottom", end: "center center", scrub: scrubSpeed }
-});
+// Sequence 2: About to Certs
+masterTl.to(masterGroup.position, { x: -2.8, z: -1.5, ease: "power1.inOut" }, 1)
+        .to(coreMaterial.color, { r: 0.6, g: 0.1, b: 0.9, ease: "power1.inOut" }, 1);
 
-// Projects to Contact (Sinks into the abyss)
-gsap.to(masterGroup.position, {
-    y: -5,
-    z: 0,
-    ease: "sine.inOut",
-    scrollTrigger: { trigger: "#contact", start: "top bottom", end: "center center", scrub: scrubSpeed }
-});
+// Sequence 3: Certs to Projects (The Breathtaking Zoom)
+masterTl.to(masterGroup.position, { x: 0, z: 4.2, ease: "power2.inOut" }, 2)
+        .to(masterGroup.rotation, { x: Math.PI / 2, ease: "power2.inOut" }, 2);
+
+// Sequence 4: Projects to Contact (Sinks away cleanly)
+masterTl.to(masterGroup.position, { y: -5, z: 0, ease: "power1.inOut" }, 3);
+
 
 /* ==========================================
    PART 4: TYPEWRITER EFFECT
