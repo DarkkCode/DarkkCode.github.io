@@ -617,7 +617,7 @@ section {
 }
 
 .timeline-card.active .timeline-body {
-    max-height: 300px;
+    max-height: 800px;
     border-top: 1px solid var(--border-glass);
 }
 
@@ -1207,4 +1207,57 @@ section {
         gap: 16px;
         text-align: center;
     }
+}
+
+/* Lightbox Modal */
+.lightbox-modal {
+    display: none;
+    position: fixed;
+    z-index: 100000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(2, 1, 8, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 85%;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-glass-active);
+    box-shadow: var(--shadow-main), var(--shadow-neon);
+    transform: scale(0.9);
+    transition: transform 0.3s var(--ease-cyber);
+}
+
+.lightbox-modal.active {
+    display: flex;
+}
+
+.lightbox-modal.active .lightbox-content {
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    color: var(--text-pure);
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s;
+    z-index: 100001;
+}
+
+.lightbox-close:hover {
+    color: var(--accent-cyan);
 }

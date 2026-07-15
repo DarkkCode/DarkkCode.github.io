@@ -15,6 +15,8 @@ const App = {
         this.setupScrollTriggers();
         this.setupTypewriter();
         this.setupSkillsAnimation();
+        this.setupLightbox();
+        this.setupContactForm();
     },
 
     /* --- DYNAMIC HUD CURSOR --- */
@@ -432,6 +434,55 @@ const App = {
             setTimeout(typeAction, speed);
         };
         typeAction();
+    },
+
+    /* --- LIGHTBOX DISPLAY --- */
+    setupLightbox() {
+        const modal = document.getElementById('imageModal');
+        const trigger = document.querySelector('.nav-logo-pic');
+        const closeBtn = document.getElementById('modalClose');
+
+        if (!modal || !trigger) return;
+
+        trigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            modal.classList.add('active');
+        });
+
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                modal.classList.remove('active');
+            });
+        }
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal || e.target === closeBtn) {
+                modal.classList.remove('active');
+            }
+        });
+    },
+
+    /* --- SECURE FORM TRANSACTION --- */
+    setupContactForm() {
+        const form = document.getElementById('contactForm');
+        if (!form) return;
+
+        // Strip native browser submission to block security warnings
+        form.removeAttribute('action');
+        form.removeAttribute('method');
+        form.removeAttribute('enctype');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            const mailtoUrl = `mailto:visheshmadan10@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent("Operator Name: " + name + "\nOperator Email: " + email + "\n\n" + message)}`;
+            window.location.href = mailtoUrl;
+        });
     }
 };
 
