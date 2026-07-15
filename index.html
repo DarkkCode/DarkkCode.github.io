@@ -3,58 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vishesh Madan | Interactive Portfolio</title>
+    <meta name="description" content="Vishesh Madan - Software Engineer & Full-Stack Developer specializing in React Native, Laravel, and Firebase. BS CS student at SZABIST.">
+    <meta name="keywords" content="Vishesh Madan, Software Engineer, React Native, Laravel, Firebase, Full-Stack, Web Developer">
+    <meta name="author" content="Vishesh Madan">
     
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Vishesh Madan | Software Engineer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <!-- WebGL Rendering Target -->
     <div id="canvas-container"></div>
+    <div class="noise-overlay"></div>
 
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top glass-nav">
-        <div class="container">
-            <a class="navbar-brand fw-bold d-flex align-items-center" href="#">
-                <img src="Vishesh image.jpeg" alt="VM Logo" width="40" height="40" class="rounded-circle me-2 nav-profile-pic">
-                VM<span class="brand-dot">.</span>
-            </a>
+    <!-- HUD Cursor elements -->
+    <div class="custom-cursor" id="customCursor"></div>
+    <div class="custom-cursor-dot" id="customCursorDot"></div>
+
+    <!-- Header / Navigation HUD -->
+    <nav class="glass-nav" id="mainNav">
+        <div class="nav-inner">
+            <div class="nav-wrapper">
+                <a href="#hero" class="nav-brand">
+                    <img src="Vishesh image.jpeg" alt="Vishesh Madan Logo" class="nav-logo-pic">
+                    VM<span>.</span>
+                </a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#hero" class="active">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#experience">Experience</a></li>
+                    <li><a href="#skills">Skills</a></li>
+                    <li><a href="#projects">Deployments</a></li>
+                    <li><a href="#contact">Signal</a></li>
+                </ul>
+                <button class="nav-mobile-toggle" id="navToggle" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
         </div>
     </nav>
 
+    <!-- Main Container -->
     <main class="story-container">
-        
-        <section id="home" class="step-section d-flex align-items-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-8 text-content">
-                        <h5 class="text-uppercase welcome-text">Hello, I'm</h5>
-                        <h1 class="display-1 fw-bold text-glow">Vishesh Madan</h1>
-                        <h2 class="h1 mb-4">I am a <span class="gradient-text" id="typewriter"></span><span class="cursor">&nbsp;</span></h2>
-                        <p class="lead mb-5" style="max-width: 600px;">
-                            Scroll down to explore my journey. I build secure, scalable web applications with a focus on deep architecture.
-                        </p>
-                        <div class="d-flex gap-3">
-                            <a href="#projects" class="btn btn-glow">View Work</a>
-                            <a href="https://github.com/DarkkCode" target="_blank" class="btn btn-outline-glow"><i class="fab fa-github"></i></a>
-                            <a href="https://www.linkedin.com/in/vishesh-madan-76b97a289" target="_blank" class="btn btn-outline-glow"><i class="fab fa-linkedin"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-        <section id="about" class="step-section d-flex align-items-center">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 text-content">
-                        <h2 class="fw-bold mb-4 display-4">The Logic<br><span class="gradient-text">Behind the Code.</span></h2>
-                        <div class="glass-panel p-4">
-                            <p class="fs-5">Studying at <strong class="text-white">SZABIST</strong>. As a former debater, I approach problem-solving with rigorous logic and clear architecture.</p>
-                            <p>Specializing in <strong>PHP, Laravel, and MySQL</strong>, I architect backend systems that perform flawlessly under pressure.</p>
-                            <div class="mt-4">
-                                <span class="tech-badge">Java</span> <span class="tech-badge">C</span> <span class="tech-badge">PHP</span> 
-                                <span class="tech-badge">Laravel</span> <span class="tech-badge">MySQL</span> <span class="tech-badge">JavaScript</span>
+        <!-- ===== HERO SECTION ===== -->
+        <section id="hero">
+            <div class="section-inner">
+                <div class="hero-layout">
+                    <div class="hero-text">
+                        <div class="section-label">System Initialization</div>
+                        <h1 class="hero-heading">
+                            Designing <span class="gradient-text">Scalable</span> Mobile & Web Solutions
+                        </h1>
+                        <div class="hero-subtitle">
+                            I build <span class="gradient-text" id="typewriter"></span><span class="cursor">&nbsp;</span>
+                        </div>
+                        <p class="hero-description">
+                            BS Computer Science student at SZABIST specializing in cross-platform mobile architecture and full-stack systems. Driven by clear logic, performance optimization, and robust engineering.
+                        </p>
+                        <div class="hero-actions">
+                            <a href="#projects" class="btn btn-primary">Featured Deployments <i class="fas fa-arrow-right"></i></a>
+                            <a href="#contact" class="btn btn-outline">Establish Connection</a>
+                        </div>
+                        <div class="hero-stats">
+                            <div class="stat-card">
+                                <div class="stat-value" id="statProjects">4</div>
+                                <div class="stat-label">Systems Built</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="statCerts">4</div>
+                                <div class="stat-label">Credentials</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="statGpa">3.5</div>
+                                <div class="stat-label">Skill Index</div>
                             </div>
                         </div>
                     </div>
@@ -62,62 +88,475 @@
             </div>
         </section>
 
-        <section id="certs" class="step-section d-flex align-items-center">
-            <div class="container">
-                <div class="row justify-content-end">
-                    <div class="col-lg-6 text-content text-end">
-                        <h2 class="fw-bold mb-4 display-4">Continuous<br><span class="gradient-text">Evolution.</span></h2>
-                        <div class="glass-panel p-4 text-start d-inline-block w-100">
-                            <h4 class="mb-3">🏆 Credentials</h4>
-                            <p class="mb-1">✓ Google Prompting Essentials</p>
-                            <p class="mb-1">✓ Google AI Essentials</p>
-                            <p class="mb-1">✓ Fundamentals of Digital Marketing</p>
-                            <p class="mb-0">✓ Google Digital Marketing & E-Commerce</p>
-                            
-                            <h4 class="mb-3 mt-4">🗣️ Communication</h4>
-                            <p>English (Professional) | Urdu & Sindhi (Native) | Hindi (Professional)</p>
+        <!-- ===== ABOUT SECTION ===== -->
+        <section id="about">
+            <div class="section-inner">
+                <div class="about-grid">
+                    <div class="about-terminal-wrapper reveal-left">
+                        <div class="terminal-header-bar">
+                            <span class="terminal-dot red"></span>
+                            <span class="terminal-dot yellow"></span>
+                            <span class="terminal-dot green"></span>
+                            <span class="terminal-title">system_profile.json</span>
+                        </div>
+                        <div class="glass-card terminal-card-body">
+                            <pre><code>{
+  <span class="code-key">"operator"</span>: <span class="code-val">"Vishesh Madan"</span>,
+  <span class="code-key">"education"</span>: {
+    <span class="code-key">"institution"</span>: <span class="code-val">"SZABIST University"</span>,
+    <span class="code-key">"degree"</span>: <span class="code-val">"BS Computer Science"</span>,
+    <span class="code-key">"timeline"</span>: <span class="code-val">"2023 - 2027"</span>
+  },
+  <span class="code-key">"core_paradigms"</span>: [
+    <span class="code-val">"Object-Oriented Programming"</span>,
+    <span class="code-val">"Database Normalization"</span>,
+    <span class="code-val">"Cross-Platform Architecture"</span>
+  ],
+  <span class="code-key">"status"</span>: <span class="code-val">"active_deployment"</span>
+}</code></pre>
+                        </div>
+                    </div>
+                    <div class="about-content">
+                        <div class="section-label">Architect Profile</div>
+                        <h2 class="section-title">The Engineering <span class="gradient-text">Perspective.</span></h2>
+                        <p class="about-description">
+                            My approach combines mathematical logic and structured code patterns. Currently pursuing a BS in Computer Science, I design and implement applications using React Native, TypeScript, Firebase, Laravel, PHP, and MySQL. From debater to design engineer, I translate complex guidelines into clean, modular solutions.
+                        </p>
+                        <div class="about-highlights">
+                            <div class="glass-card about-highlight-card">
+                                <i class="fas fa-mobile-alt"></i>
+                                <div>
+                                    <h3 class="about-highlight-title">Native Engine</h3>
+                                    <p class="about-highlight-desc">Cross-platform development with Expo, React Native, and Context API.</p>
+                                </div>
+                            </div>
+                            <div class="glass-card about-highlight-card">
+                                <i class="fas fa-server"></i>
+                                <div>
+                                    <h3 class="about-highlight-title">Backend Architecture</h3>
+                                    <p class="about-highlight-desc">Structured APIs, Laravel routing, database design, and MySQL tuning.</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="projects" class="step-section d-flex align-items-center">
-            <div class="container text-center text-content">
-                <h2 class="fw-bold mb-5 display-4">Featured <span class="gradient-text">Deployments.</span></h2>
-                <div class="row g-4 text-start">
-                    <div class="col-md-6">
-                        <div class="glass-panel p-5 h-100 project-card">
-                            <h3 class="fw-bold text-white mb-3">🐝 BitHive</h3>
-                            <p>A secure community forum built with Laravel. Features authentication, CRUD posts, and dynamic toggles.</p>
-                            <a href="https://github.com/DarkkCode/BitHive" target="_blank" class="btn btn-outline-glow mt-3">View Source</a>
+        <!-- ===== TIMELINE SECTION ===== -->
+        <section id="experience">
+            <div class="section-inner">
+                <div class="section-label">Chronology</div>
+                <h2 class="section-title">System <span class="gradient-text">Timeline.</span></h2>
+                
+                <div class="timeline-accordion">
+                    <!-- Freelance -->
+                    <div class="glass-card timeline-card active" data-index="0">
+                        <div class="timeline-header">
+                            <div class="timeline-date">2023 - Present</div>
+                            <div class="timeline-role">Freelance Web Developer</div>
+                            <div class="timeline-org">Independent Contractor</div>
+                            <div class="timeline-arrow"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="timeline-body">
+                            <div class="timeline-content">
+                                <ul class="timeline-list">
+                                    <li>Develop database-driven platforms with Laravel, PHP, MySQL, and modern JavaScript environments.</li>
+                                    <li>Manage user requirements, architectural specs, deployment workflows, and post-launch maintenance cycles.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="glass-panel p-5 h-100 project-card">
-                            <h3 class="fw-bold text-white mb-3">🎓 Student Management</h3>
-                            <p>An administrative dashboard to manage student records, grades, and attendance. Optimized for data integrity.</p>
-                            <a href="https://github.com/DarkkCode/Student-Management-System" target="_blank" class="btn btn-outline-glow mt-3">View Source</a>
+
+                    <!-- Virtuous Pak -->
+                    <div class="glass-card timeline-card" data-index="1">
+                        <div class="timeline-header">
+                            <div class="timeline-date">2022 - 2024</div>
+                            <div class="timeline-role">Digital Operations Associate</div>
+                            <div class="timeline-org">Virtuous Pak Agency</div>
+                            <div class="timeline-arrow"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="timeline-body">
+                            <div class="timeline-content">
+                                <ul class="timeline-list">
+                                    <li>Assisted in scoping, testing, and shipping web and mobile applications for local and international clients.</li>
+                                    <li>Built 3D structures and visual assets using After Effects, Photoshop, and 3ds Max.</li>
+                                    <li>Coordinated directly with design teams and performance marketers to deliver project builds.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Education -->
+                    <div class="glass-card timeline-card" data-index="2">
+                        <div class="timeline-header">
+                            <div class="timeline-date">Oct 2027 (Expected)</div>
+                            <div class="timeline-role">BS Computer Science</div>
+                            <div class="timeline-org">SZABIST University</div>
+                            <div class="timeline-arrow"><i class="fas fa-chevron-down"></i></div>
+                        </div>
+                        <div class="timeline-body">
+                            <div class="timeline-content">
+                                <ul class="timeline-list">
+                                    <li>Core coursework: Data Structures, Object-Oriented Programming, Database Systems, Artificial Intelligence, and Web Engineering.</li>
+                                    <li>Focus areas: Architectural structures, algorithmic analysis, and modular software engineering patterns.</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="step-section d-flex align-items-center text-center">
-            <div class="container text-content">
-                <div class="glass-panel p-5 mx-auto" style="max-width: 600px;">
-                    <h2 class="fw-bold mb-4 display-4">Let's <span class="gradient-text">Connect.</span></h2>
-                    <p class="mb-4 text-light">Always open to discussing new projects, creative ideas, or opportunities.</p>
-                    <a href="mailto:visheshmadan10@gmail.com" class="btn btn-glow w-100 mb-4">Email Me 👋</a>
-                    <p class="small text-muted m-0">&copy; 2026 Vishesh Madan. Built with Code.</p>
+        <!-- ===== SKILLS SECTION ===== -->
+        <section id="skills">
+            <div class="section-inner">
+                <div class="section-label">Vector Grid</div>
+                <h2 class="section-title">Technical <span class="gradient-text">Inventory.</span></h2>
+
+                <div class="skills-grid">
+                    <!-- Category 1 -->
+                    <div class="glass-card skill-card">
+                        <div class="skill-category-icon"><i class="fas fa-code"></i></div>
+                        <h3 class="skill-category-title">Languages</h3>
+                        <ul class="skill-list">
+                            <li class="skill-item">
+                                <div class="skill-meta"><span>TypeScript & JavaScript</span><span>90%</span></div>
+                                <div class="skill-track"><div class="skill-progress" data-width="90%"></div></div>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-meta"><span>PHP</span><span>85%</span></div>
+                                <div class="skill-track"><div class="skill-progress" data-width="85%"></div></div>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-meta"><span>SQL</span><span>80%</span></div>
+                                <div class="skill-track"><div class="skill-progress" data-width="80%"></div></div>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-meta"><span>Java & C</span><span>75%</span></div>
+                                <div class="skill-track"><div class="skill-progress" data-width="75%"></div></div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Category 2 -->
+                    <div class="glass-card skill-card">
+                        <div class="skill-category-icon"><i class="fas fa-layer-group"></i></div>
+                        <h3 class="skill-category-title">Frameworks</h3>
+                        <ul class="skill-list">
+                            <li class="skill-item">
+                                <div class="skill-meta"><span>React Native & Expo</span><span>88%</span></div>
+                                <div class="skill-track"><div class="skill-progress" data-width="88%"></div></div>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-meta"><span>Laravel & Blade</span><span>85%</span></div>
+                                <div class="skill-track"><div class="skill-progress" data-width="85%"></div></div>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-meta"><span>Firebase Auth & Firestore</span><span>82%</span></div>
+                                <div class="skill-track"><div class="skill-progress" data-width="82%"></div></div>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-meta"><span>MySQL Schema Design</span><span>80%</span></div>
+                                <div class="skill-track"><div class="skill-progress" data-width="80%"></div></div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Category 3 -->
+                    <div class="glass-card skill-card">
+                        <div class="skill-category-icon"><i class="fas fa-bezier-curve"></i></div>
+                        <h3 class="skill-category-title">Visualization</h3>
+                        <ul class="skill-list">
+                            <li class="skill-item">
+                                <div class="skill-meta"><span>Autodesk 3ds Max</span><span>75%</span></div>
+                                <div class="skill-track"><div class="skill-progress" data-width="75%"></div></div>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-meta"><span>After Effects</span><span>80%</span></div>
+                                <div class="skill-track"><div class="skill-progress" data-width="80%"></div></div>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-meta"><span>Photoshop Asset Design</span><span>85%</span></div>
+                                <div class="skill-track"><div class="skill-progress" data-width="85%"></div></div>
+                            </li>
+                            <li class="skill-item">
+                                <div class="skill-meta"><span>OOP & Design Patterns</span><span>80%</span></div>
+                                <div class="skill-track"><div class="skill-progress" data-width="80%"></div></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== PROJECTS SECTION (BENTO GRID) ===== -->
+        <section id="projects">
+            <div class="section-inner">
+                <div class="section-label">Deployments</div>
+                <h2 class="section-title">Production <span class="gradient-text">Systems.</span></h2>
+
+                <div class="bento-grid">
+                    <!-- Project 1: YouthEcho -->
+                    <div class="glass-card bento-card wide">
+                        <div class="bento-header">
+                            <div class="bento-icon"><i class="fas fa-broadcast-tower"></i></div>
+                            <div class="bento-meta">Civic Tech / 2026</div>
+                        </div>
+                        <div class="bento-info">
+                            <h3 class="bento-title">YouthEcho</h3>
+                            <div class="bento-tech">React Native, Expo, TypeScript, Firebase</div>
+                            <p class="bento-desc">
+                                AI-powered civic reporting application designed for children. Engineered chat interface mechanics, animated layout systems, parental lock gates, parent dashboards, and modular state architecture. Enabled device integration (camera and microphone inputs) alongside Firestore logging systems and privacy control scripts.
+                            </p>
+                        </div>
+                        <div class="bento-footer">
+                            <div class="bento-tags">
+                                <span class="bento-tag">Mobile</span>
+                                <span class="bento-tag">AI Input</span>
+                                <span class="bento-tag">Privacy Guard</span>
+                            </div>
+                            <a href="https://github.com/DarkkCode" target="_blank" class="bento-link" aria-label="GitHub Repository">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 2: SpendWise -->
+                    <div class="glass-card bento-card narrow">
+                        <div class="bento-header">
+                            <div class="bento-icon"><i class="fas fa-wallet"></i></div>
+                            <div class="bento-meta">Fintech / 2026</div>
+                        </div>
+                        <div class="bento-info">
+                            <h3 class="bento-title">SpendWise</h3>
+                            <div class="bento-tech">React Native, Expo, Firestore</div>
+                            <p class="bento-desc">
+                                Cross-platform mobile tracker offering authenticated per-user space allocation, real-time sync nodes, monthly threshold budgets, and navigation stack mechanics.
+                            </p>
+                        </div>
+                        <div class="bento-footer">
+                            <div class="bento-tags">
+                                <span class="bento-tag">Fintech</span>
+                                <span class="bento-tag">Cloud Sync</span>
+                            </div>
+                            <a href="https://github.com/DarkkCode" target="_blank" class="bento-link" aria-label="GitHub Repository">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 3: BitHive -->
+                    <div class="glass-card bento-card narrow">
+                        <div class="bento-header">
+                            <div class="bento-icon"><i class="fas fa-hexagon"></i></div>
+                            <div class="bento-meta">Forum / 2025</div>
+                        </div>
+                        <div class="bento-info">
+                            <h3 class="bento-title">BitHive</h3>
+                            <div class="bento-tech">Laravel, Blade, MySQL</div>
+                            <p class="bento-desc">
+                                Community portal with authentication controls, database-level posts tracking, role structures, user parameters, and adaptive interface layers.
+                            </p>
+                        </div>
+                        <div class="bento-footer">
+                            <div class="bento-tags">
+                                <span class="bento-tag">Laravel MVC</span>
+                                <span class="bento-tag">SQL DB</span>
+                            </div>
+                            <a href="https://github.com/DarkkCode/BitHive" target="_blank" class="bento-link" aria-label="GitHub Repository">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Project 4: Student Management System -->
+                    <div class="glass-card bento-card wide">
+                        <div class="bento-header">
+                            <div class="bento-icon"><i class="fas fa-database"></i></div>
+                            <div class="bento-meta">Database / 2024</div>
+                        </div>
+                        <div class="bento-info">
+                            <h3 class="bento-title">Student Management System</h3>
+                            <div class="bento-tech">Core PHP, MySQL, CSS Grid</div>
+                            <p class="bento-desc">
+                                Records administration interface developed with relational schemas. Focuses on data normalization, indexes, attendance trackers, grading operations, and raw queries optimized for transaction speed.
+                            </p>
+                        </div>
+                        <div class="bento-footer">
+                            <div class="bento-tags">
+                                <span class="bento-tag">Core Architecture</span>
+                                <span class="bento-tag">Query Control</span>
+                            </div>
+                            <a href="https://github.com/DarkkCode/Student-Management-System" target="_blank" class="bento-link" aria-label="GitHub Repository">
+                                <i class="fab fa-github"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CREDENTIALS & EXTRA INFO ===== -->
+        <section id="credentials">
+            <div class="section-inner">
+                <div class="section-label">Validation</div>
+                <h2 class="section-title">Certifications & <span class="gradient-text">Competencies.</span></h2>
+
+                <div class="certs-grid" style="margin-bottom: 64px;">
+                    <div class="glass-card cert-card">
+                        <div class="cert-icon"><i class="fas fa-brain"></i></div>
+                        <h4 class="cert-title">AI Essentials</h4>
+                        <p class="cert-org">Google · 2025</p>
+                        <span class="cert-badge">Verified</span>
+                    </div>
+                    <div class="glass-card cert-card">
+                        <div class="cert-icon"><i class="fas fa-magic"></i></div>
+                        <h4 class="cert-title">Prompting Essentials</h4>
+                        <p class="cert-org">Google · 2025</p>
+                        <span class="cert-badge">Verified</span>
+                    </div>
+                    <div class="glass-card cert-card">
+                        <div class="cert-icon"><i class="fas fa-shopping-bag"></i></div>
+                        <h4 class="cert-title">Digital Marketing & E-Commerce</h4>
+                        <p class="cert-org">Google · 2025</p>
+                        <span class="cert-badge">Verified</span>
+                    </div>
+                    <div class="glass-card cert-card">
+                        <div class="cert-icon"><i class="fas fa-chart-line"></i></div>
+                        <h4 class="cert-title">Fundamentals of Digital Marketing</h4>
+                        <p class="cert-org">Google · 2023</p>
+                        <span class="cert-badge">Verified</span>
+                    </div>
+                </div>
+
+                <div class="extra-layout">
+                    <div class="glass-card">
+                        <h3 class="info-box-title">Languages</h3>
+                        <ul class="languages-list">
+                            <li class="language-row">
+                                <span class="lang-name">English</span>
+                                <span class="lang-val">Professional</span>
+                            </li>
+                            <li class="language-row">
+                                <span class="lang-name">Urdu</span>
+                                <span class="lang-val">Native</span>
+                            </li>
+                            <li class="language-row">
+                                <span class="lang-name">Sindhi</span>
+                                <span class="lang-val">Native</span>
+                            </li>
+                            <li class="language-row">
+                                <span class="lang-name">Spanish</span>
+                                <span class="lang-val">Elementary</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="glass-card education-card">
+                        <h3 class="info-box-title">Academic Foundation</h3>
+                        <div class="edu-degree">BS Computer Science</div>
+                        <div class="edu-school">SZABIST University, Karachi</div>
+                        <p class="edu-details" style="margin-top: auto;">
+                            Target graduation October 2027. Specializing in systems architecture and modular algorithms. Developing deep academic experience with data arrays, sorting paradigms, software testing specifications, and Web-GL graphics parameters.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== CONTACT SECTION ===== -->
+        <section id="contact">
+            <div class="section-inner">
+                <div class="contact-layout">
+                    <div class="contact-meta">
+                        <div class="section-label">Connect</div>
+                        <h2 class="section-title">Establish <span class="gradient-text">Signal.</span></h2>
+                        <p class="contact-meta-desc">
+                            Inquiries regarding projects, software architectures, full-stack systems, or mobile engineering collaborations.
+                        </p>
+                        <ul class="contact-channels">
+                            <li class="contact-channel-item">
+                                <div class="contact-channel-icon"><i class="fas fa-envelope"></i></div>
+                                <div class="contact-channel-data">
+                                    <strong>Email Address</strong>
+                                    <span>visheshmadan10@gmail.com</span>
+                                </div>
+                            </li>
+                            <li class="contact-channel-item">
+                                <div class="contact-channel-icon"><i class="fas fa-phone"></i></div>
+                                <div class="contact-channel-data">
+                                    <strong>Mobile Number</strong>
+                                    <span>0302-2407978</span>
+                                </div>
+                            </li>
+                            <li class="contact-channel-item">
+                                <div class="contact-channel-icon"><i class="fas fa-map-marker-alt"></i></div>
+                                <div class="contact-channel-data">
+                                    <strong>Base Coordinates</strong>
+                                    <span>Karachi, Pakistan</span>
+                                </div>
+                            </li>
+                        </ul>
+                        <div class="contact-socials">
+                            <a href="https://github.com/DarkkCode" target="_blank" class="social-btn" aria-label="GitHub Link"><i class="fab fa-github"></i></a>
+                            <a href="https://www.linkedin.com/in/vishesh-madan-76b97a289" target="_blank" class="social-btn" aria-label="LinkedIn Link"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                    <div class="glass-card contact-form-card">
+                        <h3 class="form-title">Transmission</h3>
+                        <form id="contactForm" action="mailto:visheshmadan10@gmail.com" method="POST" enctype="text/plain">
+                            <div class="form-inputs">
+                                <div class="form-row">
+                                    <div class="input-group">
+                                        <label for="name">Operator Name</label>
+                                        <input type="text" id="name" name="name" required placeholder="John Doe">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="email">Operator Email</label>
+                                        <input type="email" id="email" name="email" required placeholder="name@domain.com">
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <label for="subject">Transmission Subject</label>
+                                    <input type="text" id="subject" name="subject" required placeholder="Deployment Inquiry">
+                                </div>
+                                <div class="input-group">
+                                    <label for="message">Transmission Message</label>
+                                    <textarea id="message" name="message" required placeholder="Input message data..."></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Transmit Signal <i class="fas fa-paper-plane"></i></button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </section>
 
     </main>
 
+    <!-- Footer -->
+    <footer class="cyber-footer">
+        <div class="footer-inner">
+            <div class="footer-copyright">
+                &copy; 2026 Madan, Vishesh. System operational. Crafted with <span>precision</span>.
+            </div>
+            <div class="footer-credit">
+                Built with WebGL & CSS Grid.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Three.js + Addons via dynamic scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- We load modular add-ons from cdnjs/unpkg for post-processing -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+
+    <!-- GSAP for scroll orchestrations -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     
