@@ -48,6 +48,7 @@
     function closeMobileMenu() {
         if (navLinks.classList.contains('open')) {
             navLinks.classList.remove('open');
+            nav.classList.remove('menu-open');
             navToggle.classList.remove('open');
             navToggle.setAttribute('aria-expanded', 'false');
             navToggle.setAttribute('aria-label', 'Open menu');
@@ -57,6 +58,7 @@
 
     navToggle.addEventListener('click', () => {
         const open = navLinks.classList.toggle('open');
+        nav.classList.toggle('menu-open', open);
         navToggle.classList.toggle('open', open);
         navToggle.setAttribute('aria-expanded', String(open));
         navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
